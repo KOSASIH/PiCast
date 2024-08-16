@@ -1,12 +1,20 @@
 from flask import Blueprint, request, jsonify
 from app.services.podcast_service import PodcastService
-from ai_model.make_recommendations import make_recommendations
+from moderation.moderation_service import ModerationService
 
 podcast_blueprint = Blueprint('podcast', __name__)
 
-@podcast_blueprint.route('/podcasts/recommend', methods=['GET'])
-def get_recommended_podcasts():
-    user_id = request.args.get('user_id')
-    num_recommendations = request.args.get('num_recommendations', 10)
-    recommended_podcasts = make_recommendations(user_id, num_recommendations)
-    return jsonify([PodcastService.get_podcast_by_id(podcast_id).to_dict() for podcast_id in recommended_podcasts])
+@podcast_blueprint.route('/podcasts/<int:podcast_id>/report', methods=['POST'])
+def report_podcast(podcast_id):
+    user_id = request.json.get('user_id')
+    reason = request.json.get('reason')
+    description = request.json.get('description')
+    ModerationService().report_podcast(podcast_id, user_id, reason, description)
+    return jsonify({'message': 'Report submitted successfully'})
+
+@podcast_blueprint.route('/podcasts/<int:podcast_id>/moderate', methods=['POST'])
+def moderate_podcast(podcast_id):
+    moderator_id = request.json.get('moderator_id')
+    status = request.json.get('status')
+    ModerationService().moderate_podcast(podcast_id, moderator_id, status)
+    return jsonify({'message': 'Moderation submitted successfully'})
