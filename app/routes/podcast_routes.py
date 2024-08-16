@@ -1,13 +1,13 @@
 from flask import Blueprint, request, jsonify
 from app.services.podcast_service import PodcastService
-from app.recommendations import RecommendationModel
+from app.content_based_filtering import ContentBasedFiltering
 
 podcast_blueprint = Blueprint('podcast', __name__)
 
-recommendation_model = RecommendationModel(user_podcast_matrix)
+content_based_filtering = ContentBasedFiltering(podcast_episodes)
 
-@podcast_blueprint.route('/podcasts/recommendations', methods=['GET'])
-def get_recommendations():
-    user_id = request.args.get('user_id')
-    recommendations = recommendation_model.predict_recommendations(user_id)
+@podcast_blueprint.route('/podcasts/recommendations/content-based', methods=['GET'])
+def get_content_based_recommendations():
+    podcast_id = request.args.get('podcast_id')
+    recommendations = content_based_filtering.predict_recommendations(podcast_id)
     return jsonify({'recommendations': recommendations})
