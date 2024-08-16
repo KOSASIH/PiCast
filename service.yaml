@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: podcast-recommendation-system
+spec:
+  selector:
+    app: podcast-recommendation-system
+  ports:
+  - name: http
+    port: 5000
+    targetPort: 5000
+  type: LoadBalancer
