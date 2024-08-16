@@ -1,7 +1,7 @@
 # Python dependencies
 python >= 3.7
 pychromecast == 10.2.3
-flask == 2.0.1
+flask == 2.2.5
 flask_socketio == 5.1.1
 requests == 2.25.1
 pyjwt == 2.3.0
