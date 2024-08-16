@@ -5,7 +5,7 @@ flask == 2.0.1
 flask_socketio == 5.1.1
 requests == 2.25.1
 pyjwt == 2.3.0
-cryptography == 3.4.7
+cryptography == 42.0.4
 
 # Additional dependencies for Raspberry Pi
 RPi.GPIO == 0.7.1
