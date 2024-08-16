@@ -1,0 +1,39 @@
+-- podcasts.db
+
+-- Create table for podcasts
+CREATE TABLE podcasts (
+  id INTEGER PRIMARY KEY,
+  title TEXT NOT NULL,
+  description TEXT,
+  url TEXT NOT NULL,
+  image_url TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create table for podcast episodes
+CREATE TABLE episodes (
+  id INTEGER PRIMARY KEY,
+  podcast_id INTEGER NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT,
+  url TEXT NOT NULL,
+  duration INTEGER,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (podcast_id) REFERENCES podcasts (id)
+);
+
+-- Create table for podcast categories
+CREATE TABLE categories (
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create table for podcast-category relationships
+CREATE TABLE podcast_categories (
+  podcast_id INTEGER NOT NULL,
+  category_id INTEGER NOT NULL,
+  PRIMARY KEY (podcast_id, category_id),
+  FOREIGN KEY (podcast_id) REFERENCES podcasts (id),
+  FOREIGN KEY (category_id) REFERENCES categories (id)
+);
