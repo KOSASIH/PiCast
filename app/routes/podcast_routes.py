@@ -1,23 +1,13 @@
 from flask import Blueprint, request, jsonify
 from app.services.podcast_service import PodcastService
-from app.metrics import PodcastMetrics
+from app.recommendations import RecommendationModel
 
 podcast_blueprint = Blueprint('podcast', __name__)
 
-metrics = PodcastMetrics()
+recommendation_model = RecommendationModel(user_podcast_matrix)
 
-@podcast_blueprint.route('/podcasts/<int:podcast_id>/play', methods=['GET'])
-def play_podcast(podcast_id):
-    metrics.increment_podcast_plays()
-    # Play the podcast
-    return jsonify({'message': 'Podcast played successfully'})
-
-@podcast_blueprint.route('/podcasts/<int:podcast_id>/download', methods=['GET'])
-def download_podcast(podcast_id):
-    metrics.increment_podcast_downloads()
-    # Download the podcast
-    return jsonify({'message': 'Podcast downloaded successfully'})
-
-@podcast_blueprint.route('/metrics', methods=['GET'])
-def get_metrics():
-    return metrics.podcast_plays, metrics.podcast_downloads, metrics.user_engagement
+@podcast_blueprint.route('/podcasts/recommendations', methods=['GET'])
+def get_recommendations():
+    user_id = request.args.get('user_id')
+    recommendations = recommendation_model.predict_recommendations(user_id)
+    return jsonify({'recommendations': recommendations})
