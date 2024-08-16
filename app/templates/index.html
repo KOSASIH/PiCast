@@ -1,0 +1,37 @@
+# app/templates/index.html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Podcast Recommendation System</title>
+  </head>
+  <body>
+    <h1>Podcast Recommendation System</h1>
+    <form>
+      <label for="user_id">User ID:</label>
+      <input type="text" id="user_id" name="user_id"><br><br>
+      <label for="podcast_id">Podcast ID:</label>
+      <input type="text" id="podcast_id" name="podcast_id"><br><br>
+      <input type="submit" value="Get Recommendations">
+    </form>
+    <div id="recommendations"></div>
+
+    <script>
+      const form = document.querySelector('form');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const userId = document.querySelector('#user_id').value;
+        const podcastId = document.querySelector('#podcast_id').value;
+        const response = await fetch(`/podcasts/recommendations/hybrid?user_id=${userId}&podcast_id=${podcastId}`);
+        const recommendations = await response.json();
+        const recommendationsDiv = document.querySelector('#recommendations');
+        recommendationsDiv.innerHTML = '';
+        recommendations.recommendations.forEach((recommendation) => {
+          const podcastTitle = `Podcast ${recommendation}`;
+          const podcastElement = document.createElement('p');
+          podcastElement.textContent = podcastTitle;
+          recommendationsDiv.appendChild(podcastElement);
+        });
+      });
+    </script>
+  </body>
+</html>
