@@ -1,0 +1,16 @@
+# Python dependencies
+python >= 3.7
+pychromecast == 10.2.3
+flask == 2.0.1
+flask_socketio == 5.1.1
+requests == 2.25.1
+pyjwt == 2.3.0
+cryptography == 3.4.7
+
+# Additional dependencies for Raspberry Pi
+RPi.GPIO == 0.7.1
+pyudev == 0.23.1
+
+# Optional dependencies for development and testing
+pytest == 6.2.4
+pytest-cov == 2.12.1
