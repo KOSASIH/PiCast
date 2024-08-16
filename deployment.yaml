@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podcast-recommendation-system
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: podcast-recommendation-system
+  template:
+    metadata:
+      labels:
+        app: podcast-recommendation-system
+    spec:
+      containers:
+      - name: podcast-recommendation-system
+        image: podcast-recommendation-system:latest
+        ports:
+        - containerPort: 5000
